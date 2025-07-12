@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather app</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="main-container">
+      <div class="current-weather">
+        <!--Card-Header-->
+        <div class="card-header">
+          <!--Card-Header-Left-->
+          <div class="card-header-left">
+            <img src="assets/location.png" class="location-marker" alt="" />
+            <div>
+              <h3 class="city-name">San Francisco, CA</h3>
+              <p class="country-name">United States</p>
+            </div>
+          </div>
+          <!--Card-Header-Right-->
+          <div class="card-header-right">
+            <p class="last-update">Last Updated</p>
+            <p class="last-time">Time</p>
+          </div>
+        </div>
+
+        <!--Card-Mid Section-->
+        <div class="card-mid-section">
+          <!--Card-Mid Section-Left-->
+          <div class="card-content-left">
+            <h1 class="temperature">28°</h1>
+            <h1 class="status">Sunny & Clear</h1>
+            <p class="status-message">Perfect beach weather</p>
+          </div>
+          <!--Card-Mid Section-Right-->
+          <div class="card-content-right">
+            <img src="/assets/sun.png" class="weather-img" alt="" />
+          </div>
+        </div>
+
+        <!--Card-Bottom Section-->
+        <div class="card-bottom-section">
+          <div class="more-info feels-like-parent">
+            Feels Like
+            <p class="feels-like-temp">32°</p>
+          </div>
+          <div class="more-info uv-index-parent">UV Index
+            <p class="uv-index">8 High</p>
+          </div>
+          <div class="more-info humidity-parent">Feels Like
+            <p class="humidity">68%</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
