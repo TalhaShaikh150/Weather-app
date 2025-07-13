@@ -22,6 +22,50 @@ body {
   --gray: #c3b4b4;
 }
 
+.search-bar {
+  display: flex;
+  max-width: 500px;
+  justify-content: end;
+  margin: 20px 2em 20px auto;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-city-input {
+  flex: 1;
+  padding: 12px 16px;
+  border: none;
+  font-size: 16px;
+  outline: none;
+  color: #505050;
+}
+
+.search-city-input::placeholder {
+  color: #999;
+}
+
+.search-btn {
+  padding: 0 16px;
+  border: none;
+  background: var(--sunny-color);
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+
+
+/* For sticky positioning at top */
+.sticky-search {
+  position: sticky;
+  top: 0;
+  background: white;
+  padding: 12px;
+  z-index: 100;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
 .main-container {
   display: flex;
   margin: auto;
@@ -95,12 +139,12 @@ body {
   color: var(--light);
 }
 
-.status {
+.weather-status {
   font-weight: 600;
   color: var(--light);
 }
 
-.status-message {
+.weather-detail {
   color: var(--gray);
   font-weight: 500;
   font-size: 1.05em;
@@ -111,7 +155,7 @@ body {
   background-color: var(--sunny-color);
   border-radius: 50%;
   padding: 10px;
-  width: 60%;
+  width: 100%;
 }
 
 /*Card-Bottom Section*/
@@ -146,10 +190,18 @@ body {
   color: var(--light);
 }
 
+.humidity {
+  color: var(--light);
+}
 
-.margin-top{
+.uv-index {
+  font-weight: 500;
+}
+
+.margin-top {
   margin-top: 40px;
 }
+
 .today-highlights {
   border-radius: 12px;
   padding: 1em;
@@ -187,16 +239,18 @@ body {
   justify-content: space-between;
   margin: 10px 8px;
   padding: 12px;
-  border-radius: 5px;
+  border-radius: 12px;
   color: var(--light);
   transition: 0.3s all ease;
-  background-color: #ffffff2e;
+  background-color: #ffffff23;
   cursor: pointer;
 }
-.highlights-info:hover{
-  background-color: #ffffff6c;
-  transform: scale(1.05);
+
+.highlights-info:hover {
+  background-color: #ffffff59;
+  transform: scale(1.02);
 }
+
 .highlights-inner {
   display: flex;
   align-items: center;
@@ -207,7 +261,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  
+
 }
 
 

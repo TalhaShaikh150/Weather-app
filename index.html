@@ -15,6 +15,15 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+
+
+<div class="search-bar">
+  <input type="text" placeholder="Search city..." class="search-city-input">
+  <button class="search-btn">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+</div>
+
     <div class="main-container">
       <div class="current-weather">
         <!--Card-Header-->
@@ -23,7 +32,7 @@
           <div class="card-header-left">
             <img src="assets/location.png" class="location-marker" alt="" />
             <div>
-              <h3 class="city-name">San Francisco, CA</h3>
+              <h3 class="city-name"></h3>
               <p class="country-name">United States</p>
             </div>
           </div>
@@ -38,13 +47,13 @@
         <div class="card-mid-section">
           <!--Card-Mid Section-Left-->
           <div class="card-content-left">
-            <h1 class="temperature">28°</h1>
-            <h1 class="status">Sunny & Clear</h1>
-            <p class="status-message">Perfect beach weather</p>
+            <h1 class="temperature"></h1>
+            <h1 class="weather-status"></h1>
+            <p class="weather-detail"></p>
           </div>
           <!--Card-Mid Section-Right-->
           <div class="card-content-right">
-            <img src="assets/sun.png" class="weather-img" alt="" />
+            <img  class="weather-img" src="assets/overcast.png" alt="" />
           </div>
         </div>
 
@@ -52,15 +61,16 @@
         <div class="card-bottom-section">
           <div class="more-info feels-like-parent">
             Feels Like
-            <p class="feels-like-temp">32°</p>
+            <p class="feels-like-temp"></p>
           </div>
-          <div class="more-info uv-index-parent">
-            UV Index
-            <p class="uv-index">8 High</p>
+          <div class="more-info ">
+            <span class="uv-index-parent">UV Index</span>
+            
+            <p class="uv-index"></p>
           </div>
           <div class="more-info humidity-parent">
-            Feels Like
-            <p class="humidity">68%</p>
+          Humidity
+            <p class="humidity"></p>
           </div>
         </div>
       </div>
@@ -74,12 +84,12 @@
         <div class="margin-top">
 
        
-        <div class="highlights-info">`
+        <div class="highlights-info">
           <div class="highlights-inner">
             <img src="assets/wind.png" alt="">
             <span> Wind </span>
           </div>
-          <span class="wind">12 km/h</span>
+          <span class="wind"></span>
           </div>
         <div class="highlights-info">
           <div class="highlights-inner">
@@ -93,7 +103,7 @@
             <img src="assets/speed-red.png" alt="">
             <span>Pressure</span>
           </div>
-          <span>1013 hPa
+          <span class="pressure">1013 hPa
 </span>
             
         </div>
@@ -103,12 +113,14 @@
             <img src="assets/temp.png" alt="">
             <span> Dew Point</span>
           </div>
-          <span>18°
+          <span class="dew-point">18°
 </span>
             
         </div>
      </div>
       </div>
-    <script src="script.js"></script>
+      <!-- <script src="sweetalert2.all.min.js"></script> -->
+   <script src="script.js"></script>
+
   </body>
 </html>
