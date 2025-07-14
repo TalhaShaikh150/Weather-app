@@ -10,17 +10,52 @@ body {
   background-color: #121B2E;
 }
 
-:root {
-  --sunny: linear-gradient(10deg, #4b1f06b3, #fe760e63, #ff9e5463, #fb9a4f85);
+:root.overcast {
+  --weather: linear-gradient(135deg, #1E1E1E 0%, #2E2E2E 100%);
+  --weather-color: #BDBDBD;
+  --light: #EEEEEE;
+  --gray: #9E9E9E;
+}
 
-  --sunny-color: #89521A;
-  --rain: linear-gradient(135deg, #2c67ab 0%, #2690baae 100%);
 
-  --storm: linear-gradient(135deg, #6214d7 0%, #5303a9af 100%);
+:root.rain {
+  --weather: linear-gradient(135deg, #0D2B52 0%, #1A4574 100%);
+  --weather-color: #81D4FA;
+  --light: #E1F5FE;
+  --gray: #29B6F6;
+}
 
+:root.thunder {
+  --weather: linear-gradient(135deg, #6214d7 0%, #5303a9af 100%);
+  --weather-color: #6214d7;
   --light: #fff;
   --gray: #c3b4b4;
 }
+
+/* :root.sunny {
+  --weather: linear-gradient(135deg, #8B2E00 0%, #5C1D00 100%);
+  --weather-color: #0D3B66;
+  --light: #FFE8D6;
+  --gray: #FF7D33;
+} */
+
+:root.sunny {
+  --weather: linear-gradient(135deg, #6B3A10 0%, #42240A 100%);
+  --weather-color: #874205;
+  /* Ocean blue */
+  --light: #FDF2E9;
+  /* Coconut milk */
+  --gray: #DC7633;
+  /* Cinnamon */
+}
+
+:root.clear {
+  --weather: linear-gradient(135deg, #556f91 0%, #203d63 100%);
+  --weather-color: #10506d;
+  --light: #E1F5FE;
+  --gray: #29B6F6;
+}
+
 
 .search-bar {
   display: flex;
@@ -48,7 +83,7 @@ body {
 .search-btn {
   padding: 0 16px;
   border: none;
-  background: var(--sunny-color);
+  background: var(--weather-color);
   color: white;
   cursor: pointer;
   transition: background 0.2s;
@@ -74,10 +109,10 @@ body {
 
 .current-weather {
   padding: 2em;
-  background: var(--sunny);
+  background: var(--weather);
   border-radius: 20px;
   width: 60%;
-  border: 1px solid #ff9e5463;
+  border: 1px solid var(--weather-color);
   margin: 1em;
 }
 
@@ -152,7 +187,7 @@ body {
 
 
 .weather-img {
-  background-color: var(--sunny-color);
+  background-color: var(--weather-color);
   border-radius: 50%;
   padding: 10px;
   width: 100%;
@@ -174,7 +209,7 @@ body {
   text-align: center;
   width: 30%;
   height: 20%;
-  background-color: #7A5237;
+  background: var(--weather);
   padding: 12px;
   border-radius: 12px;
   transition: 0.3s all ease;
@@ -182,7 +217,7 @@ body {
 }
 
 .more-info:hover {
-  background-color: var(--sunny-color);
+  background-color: var(--weather-color);
   transform: scale(1.05);
 }
 
@@ -205,15 +240,16 @@ body {
 .today-highlights {
   border-radius: 12px;
   padding: 1em;
-  background: var(--storm);
+  background: var(--weather);
   width: 30%;
   margin: 1em;
+  border: 1px solid var(--weather-color);
 
 }
 
 .highlights {
   border: 1px solid #2690baae;
-  background-color: #3e4dbb;
+  background-color: var(--weather-color);
   border-radius: 50%;
   padding: 10px;
   width: 24px;
