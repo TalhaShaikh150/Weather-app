@@ -15,14 +15,16 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-
-
-<div class="search-bar">
-  <input type="text" placeholder="Search city..." class="search-city-input">
-  <button class="search-btn">
-    <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-</div>
+    <div class="search-bar">
+      <input
+        type="text"
+        placeholder="Search city..."
+        class="search-city-input"
+      />
+      <button class="search-btn">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </div>
 
     <div class="main-container">
       <div class="current-weather">
@@ -32,8 +34,8 @@
           <div class="card-header-left">
             <img src="assets/location.png" class="location-marker" alt="" />
             <div>
-              <h3 class="city-name">New York</h3>
-              <p class="country-name">United States</p>
+              <h3 class="city-name"></h3>
+              <p class="country-name"></p>
             </div>
           </div>
           <!--Card-Header-Right-->
@@ -47,8 +49,8 @@
         <div class="card-mid-section">
           <!--Card-Mid Section-Left-->
           <div class="card-content-left">
-            <h1 class="temperature">30</h1>
-            <h1 class="weather-status">Rainy</h1>
+            <h1 class="temperature"></h1>
+            <h1 class="weather-status"></h1>
             <p class="weather-detail"></p>
           </div>
           <!--Card-Mid Section-Right-->
@@ -63,67 +65,74 @@
             Feels Like
             <p class="feels-like-temp"></p>
           </div>
-          <div class="more-info ">
+          <div class="more-info">
             <span class="uv-index-parent">UV Index</span>
-            
+
             <p class="uv-index"></p>
           </div>
           <div class="more-info humidity-parent">
-          Humidity
+            Humidity
             <p class="humidity"></p>
           </div>
         </div>
       </div>
-      
+
       <div class="today-highlights">
         <div class="highlights-header">
           <img src="assets/highlights.png" class="highlights" alt="" />
-          <p>Today's Highlights
-          </p>
+          <p>Today's Highlights</p>
         </div>
         <div class="margin-top">
-
-       
-        <div class="highlights-info">
-          <div class="highlights-inner">
-            <img src="assets/wind.png" alt="">
-            <span> Wind </span>
+          <div class="highlights-info">
+            <div class="highlights-inner">
+              <img src="assets/wind.png" alt="" />
+              <span> Wind </span>
+            </div>
+            <span class="wind"></span>
           </div>
-          <span class="wind"></span>
+          <div class="highlights-info">
+            <div class="highlights-inner">
+              <img src="assets/visibility-blue.png" alt="" />
+              <span> Visibility</span>
+            </div>
+            <span class="visibility"></span>
           </div>
-        <div class="highlights-info">
-          <div class="highlights-inner">
-            <img src="assets/visibility-blue.png" alt="">
-            <span> Visibility</span>
+          <div class="highlights-info">
+            <div class="highlights-inner">
+              <img src="assets/speed-red.png" alt="" />
+              <span>Pressure</span>
+            </div>
+            <span class="pressure"> </span>
           </div>
-          <span class="visibility">15 km</span>
+          <div class="highlights-info">
+            <div class="highlights-inner">
+              <img src="assets/temp.png" alt="" />
+              <span> Dew Point</span>
+            </div>
+            <span class="dew-point"> </span>
           </div>
-        <div class="highlights-info">
-          <div class="highlights-inner">
-            <img src="assets/speed-red.png" alt="">
-            <span>Pressure</span>
-          </div>
-          <span class="pressure">1013 hPa
-</span>
-            
         </div>
-        <div class="highlights-info">
-          <div class="highlights-inner">
-
-            <img src="assets/temp.png" alt="">
-            <span> Dew Point</span>
-          </div>
-          <span class="dew-point">18°
-</span>
-            
+      </div>
+    </div>
+    <!--Sunrise/Sunset-->
+    <div class="sunrise-sunset">
+      <div class="sunrise-container">
+        <img src="assets/sunrise.png" alt="" class="sunrise-img" />
+        <div>
+          <span>Sunrise</span>
+          <p class="sunrise"></p>
         </div>
-     </div>
       </div>
-      <div>
+      <div class="sunset-container">
+        <img src="assets/sunset.png" alt="" class="sunset-img" />
+        <div>
+          <span>Sunset</span>
+          <p class="sunset"></p>
+        </div>
       </div>
-      
-      <!-- <script src="sweetalert2.all.min.js"></script> -->
-   <script src="script.js"></script>
+    </div>
 
+    <!-- <script src="sweetalert2.all.min.js"></script> -->
+    <script src="script.js"></script>
   </body>
 </html>
