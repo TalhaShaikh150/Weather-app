@@ -379,8 +379,7 @@ body {
 
   /* Search Bar */
   .search-bar {
-    margin: 20px auto;
-    max-width: 90%;
+    margin: 2em auto;
   }
 
   .current-weather {
@@ -402,6 +401,15 @@ body {
 
     padding: 8px;
     width: 40px;
+  }
+
+  .search-city-input {
+
+    padding-left: 10px;
+  }
+
+  .search-city-input::placeholder {
+    padding-left: 20px;
   }
 
   /* Current Weather Card */
@@ -474,11 +482,15 @@ body {
     width: 100%;
   }
 
+
+
+
+
+
   /* Touch Targets */
   .search-btn,
   .more-info,
   .highlights-info {
     min-height: 48px;
-    /* Recommended touch target size */
   }
 }
