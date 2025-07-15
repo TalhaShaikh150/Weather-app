@@ -20,6 +20,7 @@
         type="text"
         placeholder="Search city..."
         class="search-city-input"
+        autofocus
       />
       <button class="search-btn">
         <i class="fa-solid fa-magnifying-glass"></i>
@@ -27,93 +28,13 @@
     </div>
 
     <div class="main-container">
-      <div class="current-weather">
-        <!--Card-Header-->
-        <div class="card-header">
-          <!--Card-Header-Left-->
-          <div class="card-header-left">
-            <img src="assets/location.png" class="location-marker" alt="" />
-            <div>
-              <h3 class="city-name"></h3>
-              <p class="country-name"></p>
-            </div>
-          </div>
-          <!--Card-Header-Right-->
-          <div class="card-header-right">
-            <p class="last-update">Last Updated</p>
-            <p class="last-time">Time</p>
-          </div>
-        </div>
-
-        <!--Card-Mid Section-->
-        <div class="card-mid-section">
-          <!--Card-Mid Section-Left-->
-          <div class="card-content-left">
-            <h1 class="temperature"></h1>
-            <h1 class="weather-status"></h1>
-            <p class="weather-detail"></p>
-          </div>
-          <!--Card-Mid Section-Right-->
-          <div class="card-content-right">
-            <img class="weather-img" src="" alt="" />
-          </div>
-        </div>
-
-        <!--Card-Bottom Section-->
-        <div class="card-bottom-section">
-          <div class="more-info feels-like-parent">
-            Feels Like
-            <p class="feels-like-temp"></p>
-          </div>
-          <div class="more-info">
-            <span class="uv-index-parent">UV Index</span>
-
-            <p class="uv-index"></p>
-          </div>
-          <div class="more-info humidity-parent">
-            Humidity
-            <p class="humidity"></p>
-          </div>
-        </div>
-      </div>
-
-      <div class="today-highlights">
-        <div class="highlights-header">
-          <img src="assets/highlights.png" class="highlights" alt="" />
-          <p>Today's Highlights</p>
-        </div>
-        <div class="margin-top">
-          <div class="highlights-info">
-            <div class="highlights-inner">
-              <img src="assets/wind.png" alt="" />
-              <span> Wind </span>
-            </div>
-            <span class="wind"></span>
-          </div>
-          <div class="highlights-info">
-            <div class="highlights-inner">
-              <img src="assets/visibility-blue.png" alt="" />
-              <span> Visibility</span>
-            </div>
-            <span class="visibility"></span>
-          </div>
-          <div class="highlights-info">
-            <div class="highlights-inner">
-              <img src="assets/speed-red.png" alt="" />
-              <span>Pressure</span>
-            </div>
-            <span class="pressure"> </span>
-          </div>
-          <div class="highlights-info">
-            <div class="highlights-inner">
-              <img src="assets/temp.png" alt="" />
-              <span> Dew Point</span>
-            </div>
-            <span class="dew-point"> </span>
-          </div>
-        </div>
-      </div>
+      <!--TO Render Current Weather Card-->
+      <div class="current-weather"></div>
+      
+      <!--TO Render Highlights Card-->
+      <div class="today-highlights"></div>
     </div>
+
     <!--Sunrise/Sunset-->
     <div class="sunrise-sunset">
       <div class="sunrise-container">
@@ -131,6 +52,8 @@
         </div>
       </div>
     </div>
+
+    
 
     <!-- <script src="sweetalert2.all.min.js"></script> -->
     <script src="script.js"></script>

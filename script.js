@@ -1,28 +1,5 @@
-const cityName = document.querySelector(".city-name");
-const countryName = document.querySelector(".country-name");
-const temperature = document.querySelector(".temperature");
-const weatherStatus = document.querySelector(".weather-status");
-const weatherDetail = document.querySelector(".weather-detail");
-const weatherImageElement = document.querySelector(".weather-img");
-const feelsLikeTemp = document.querySelector(".feels-like-temp");
-const uvIndex = document.querySelector(".uv-index");
-const humidity = document.querySelector(".humidity");
-const lastTime = document.querySelector(".last-time");
-//For Highlights Section
-
-const wind = document.querySelector(".wind");
-const visibility = document.querySelector(".visibility");
-const pressure = document.querySelector(".pressure");
-const dewPoint = document.querySelector(".dew-point");
-
-//Sunrise and Sunset
-
-const sunriseElement = document.querySelector(".sunrise");
-const sunsetElement = document.querySelector(".sunset");
-
-//Previous Theme
-
 let previosTheme = "";
+
 //Api Code
 const key = "5eccd56d9ce745919e2152215251307";
 let city = "karachi";
@@ -34,11 +11,12 @@ function fetchData() {
     .then((res) => res.json())
     .catch(() => {})
     .then((data) => {
+      renderCurrentWeather(data);
+      renderWeatherHighlights(data);
+      renderSunSet(data);
       uvRaysRange(data);
-      renderWeatherData(data);
       showWheatherImage(data);
       searchCity(data);
-      console.log(data);
     });
 }
 fetchData();
@@ -72,32 +50,131 @@ function searchCity(data) {
   });
 }
 
-function renderWeatherData(data) {
-  cityName.innerHTML = data.location.name;
-  countryName.innerHTML = data.location.country;
-  temperature.innerHTML = Math.round(data.current.temp_c) + "°";
-  weatherStatus.innerHTML = data.current.condition.text;
-  feelsLikeTemp.innerHTML = Math.round(data.current.feelslike_c) + "°";
-  humidity.innerHTML = data.current.humidity + "%";
-  wind.innerHTML = Math.round(data.current.wind_kph) + " km/h";
-  visibility.innerHTML = Math.round(data.current.vis_km) + " km/h";
+function renderCurrentWeather(data) {
   let timestampInSeconds = data.current.last_updated_epoch;
   const date = new Date(timestampInSeconds * 1000);
 
-  lastTime.innerHTML = date.toLocaleTimeString([], {
+  let lastTime = date.toLocaleTimeString([], {
     hour: "2-digit",
     minute: "2-digit",
     hour12: true,
   });
-  pressure.innerHTML = data.current.pressure_mb + " mb";
-  dewPoint.innerHTML = data.current.dewpoint_c + "°";
 
-  //  = data.forcast;
-  sunriseElement.innerHTML = data.forecast.forecastday[0].astro.sunrise;
-  sunsetElement.innerHTML = data.forecast.forecastday[0].astro.sunset;
+  const currentWeather = document.querySelector(".current-weather");
+  currentWeather.innerHTML = `
+          <div class="card-header">
+            <div class="card-header-left">
+              <img src="assets/location.png" class="location-marker" alt="" />
+              <div>
+                <h3 class="city-name">${data.location.name}</h3>
+                <p class="country-name">${data.location.country}</p>
+              </div>
+            </div>
+            <div class="card-header-right">
+              <p class="last-update">Last Updated</p>
+              <p class="last-time">${lastTime}</p>
+            </div>
+          </div>
+
+          <!--Card-Mid Section-->
+          <div class="card-mid-section">
+            <!--Card-Mid Section-Left-->
+            <div class="card-content-left">
+              <h1 class="temperature">${
+                Math.round(data.current.temp_c) + "°"
+              }</h1>
+              <h1 class="weather-status">${data.current.condition.text}</h1>
+              <p class="weather-detail"></p>
+            </div>
+            <!--Card-Mid Section-Right-->
+            <div class="card-content-right">
+              <img class="weather-img" src="" alt="" />
+            </div>
+          </div>
+
+          <!--Card-Bottom Section-->
+          <div class="card-bottom-section">
+            <div class="more-info feels-like-parent">
+              Feels Like
+              <p class="feels-like-temp">${
+                Math.round(data.current.feelslike_c) + "°"
+              }</p>
+            </div>
+            <div class="more-info">
+              <span class="uv-index-parent">UV Index</span>
+
+              <p class="uv-index"></p>
+            </div>
+            <div class="more-info humidity-parent">
+              Humidity
+              <p class="humidity">${data.current.humidity + "%"}</p>
+            </div>
+         `;
+}
+
+function renderWeatherHighlights(data) {
+  const todayHighlights = document.querySelector(".today-highlights");
+  todayHighlights.innerHTML = ` <div class="highlights-header">
+          <img src="assets/highlights.png" class="highlights" alt="" />
+          <p>Today's Highlights</p>
+        </div>
+        <div class="margin-top">
+          <div class="highlights-info">
+            <div class="highlights-inner">
+              <img src="assets/wind.png" alt="" />
+              <span> Wind </span>
+            </div>
+            <span class="wind">${
+              Math.round(data.current.wind_kph) + " km/h"
+            }</span>
+          </div>
+          <div class="highlights-info">
+            <div class="highlights-inner">
+              <img src="assets/visibility-blue.png" alt="" />
+              <span> Visibility</span>
+            </div>
+            <span class="visibility">${
+              Math.round(data.current.vis_km) + " km/h"
+            }</span>
+          </div>
+          <div class="highlights-info">
+            <div class="highlights-inner">
+              <img src="assets/speed-red.png" alt="" />
+              <span>Pressure</span>
+            </div>
+            <span class="pressure">${data.current.pressure_mb + " mb"}</span>
+          </div>
+          <div class="highlights-info">
+            <div class="highlights-inner">
+              <img src="assets/temp.png" alt="" />
+              <span> Dew Point</span>
+            </div>
+            <span class="dew-point">${data.current.dewpoint_c + "°"}</span>
+          </div>
+        </div>`;
+}
+
+function renderSunSet(data) {
+  const sunriseAndsunset = document.querySelector(".sunrise-sunset");
+  sunriseAndsunset.innerHTML = ` <div class="sunrise-container">
+        <img src="assets/sunrise.png" alt="" class="sunrise-img" />
+        <div>
+          <span>Sunrise</span>
+          <p class="sunrise">${data.forecast.forecastday[0].astro.sunrise}</p>
+        </div>
+      </div>
+      <div class="sunset-container">
+        <img src="assets/sunset.png" alt="" class="sunset-img" />
+        <div>
+          <span>Sunset</span>
+          <p class="sunset">${data.forecast.forecastday[0].astro.sunrise}</p>
+        </div>
+      </div>`;
 }
 
 function uvRaysRange(data) {
+  const uvIndex = document.querySelector(".uv-index");
+
   let uv = data.current.uv;
 
   if (uv >= 0 && uv <= 2) {
@@ -133,6 +210,10 @@ function checkTheme(rootElement) {
 }
 
 function showWheatherImage(data) {
+  const weatherImageElement = document.querySelector(".weather-img");
+
+  const weatherDetail = document.querySelector(".weather-detail");
+
   const rootElement = document.documentElement;
   checkTheme(rootElement);
   let weatherMessage = "";
