@@ -172,7 +172,7 @@ function renderHourlyForeCast(data) {
   const hourlyForeCast = data.forecast.forecastday[0].hour;
 
   let currentHour = new Date().getHours();
-  let allDayHours = hourlyForeCast.slice(currentHour + 1, currentHour + 12);
+  let allDayHours = hourlyForeCast.slice(currentHour + 1, currentHour + 13);
 
   let html = "";
 
