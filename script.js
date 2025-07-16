@@ -6,7 +6,7 @@ let city = "karachi";
 
 function fetchData() {
   fetch(
-    `https://api.weatherapi.com/v1/current.json/forecast.json?key=${key}&q=${city}&aqi=yes`
+    `https://api.weatherapi.com/v1/forecast.json?key=${key}&q=${city}&days=8&aqi=no&alerts=no`
   )
     .then((res) => res.json())
     .catch(() => {})
@@ -17,6 +17,7 @@ function fetchData() {
       uvRaysRange(data);
       showWheatherImage(data);
       searchCity(data);
+      renderHourlyForeCast(data);
     });
 }
 fetchData();
@@ -80,25 +81,23 @@ function renderCurrentWeather(data) {
           <div class="card-mid-section">
             <!--Card-Mid Section-Left-->
             <div class="card-content-left">
-              <h1 class="temperature">${
-                Math.round(data.current.temp_c) + "°"
-              }</h1>
+              <h1 class="temperature">${Math.round(data.current.temp_c)}°</h1>
               <h1 class="weather-status">${data.current.condition.text}</h1>
               <p class="weather-detail"></p>
             </div>
-            <!--Card-Mid Section-Right-->
+          
             <div class="card-content-right">
               <img class="weather-img" src="" alt="" />
             </div>
           </div>
 
-          <!--Card-Bottom Section-->
+
           <div class="card-bottom-section">
             <div class="more-info feels-like-parent">
               Feels Like
-              <p class="feels-like-temp">${
-                Math.round(data.current.feelslike_c) + "°"
-              }</p>
+              <p class="feels-like-temp">${Math.round(
+                data.current.feelslike_c
+              )} °</p>
             </div>
             <div class="more-info">
               <span class="uv-index-parent">UV Index</span>
@@ -107,7 +106,7 @@ function renderCurrentWeather(data) {
             </div>
             <div class="more-info humidity-parent">
               Humidity
-              <p class="humidity">${data.current.humidity + "%"}</p>
+              <p class="humidity">${data.current.humidity} %</p>
             </div>
          `;
 }
@@ -124,32 +123,28 @@ function renderWeatherHighlights(data) {
               <img src="assets/wind.png" alt="" />
               <span> Wind </span>
             </div>
-            <span class="wind">${
-              Math.round(data.current.wind_kph) + " km/h"
-            }</span>
+            <span class="wind">${Math.round(data.current.wind_kph)} km/h</span>
           </div>
           <div class="highlights-info">
             <div class="highlights-inner">
               <img src="assets/visibility-blue.png" alt="" />
               <span> Visibility</span>
             </div>
-            <span class="visibility">${
-              Math.round(data.current.vis_km) + " km/h"
-            }</span>
+            <span class="visibility">${Math.round(data.current.vis_km)} km/h
           </div>
           <div class="highlights-info">
             <div class="highlights-inner">
               <img src="assets/speed-red.png" alt="" />
               <span>Pressure</span>
             </div>
-            <span class="pressure">${data.current.pressure_mb + " mb"}</span>
+            <span class="pressure">${data.current.pressure_mb} mb</span>
           </div>
           <div class="highlights-info">
             <div class="highlights-inner">
               <img src="assets/temp.png" alt="" />
               <span> Dew Point</span>
             </div>
-            <span class="dew-point">${data.current.dewpoint_c + "°"}</span>
+            <span class="dew-point">${data.current.dewpoint_c}°</span>
           </div>
         </div>`;
 }
@@ -170,6 +165,38 @@ function renderSunSet(data) {
           <p class="sunset">${data.forecast.forecastday[0].astro.sunrise}</p>
         </div>
       </div>`;
+}
+
+function renderHourlyForeCast(data) {
+  const foreCastContainer = document.querySelector(".daily-forecast-container");
+  const hourlyForeCast = data.forecast.forecastday[0].hour;
+
+  let currentHour = new Date().getHours();
+  let allDayHours = hourlyForeCast.slice(currentHour + 1, currentHour + 12);
+
+  let html = "";
+
+  allDayHours.forEach((element) => {
+    const { weatherImage } = getWeatherMeta(element.condition.text);
+
+    let date = new Date(element.time.replace(" ", "T"));
+    let time = date.toLocaleTimeString([], {
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+
+    html += `
+      <div class="daily-forecast">
+        <p>${time}</p>
+        <img src="assets/${weatherImage}" alt="" class="daily-forecast-img" />
+        <p>${element.humidity}%</p>
+        <p class="hourly-temperature">${Math.round(element.temp_c)}°</p>
+        <p class="humidity">${element.condition.text}</p>
+      </div>`;
+  });
+
+  foreCastContainer.innerHTML = html;
 }
 
 function uvRaysRange(data) {
@@ -210,138 +237,123 @@ function checkTheme(rootElement) {
 }
 
 function showWheatherImage(data) {
+  const rootElement = document.documentElement;
   const weatherImageElement = document.querySelector(".weather-img");
-
   const weatherDetail = document.querySelector(".weather-detail");
 
-  const rootElement = document.documentElement;
-  checkTheme(rootElement);
-  let weatherMessage = "";
-
   let conditionText = data.current.condition.text;
-  let weatherImage = "default";
-  if (conditionText === "Clear") {
+
+  let { weatherImage, theme, message } = getWeatherMeta(conditionText);
+
+  rootElement.className = ""; // clear previous classes
+  rootElement.classList.add(theme);
+  weatherDetail.innerHTML = message;
+  weatherImageElement.src = `assets/${weatherImage}`;
+}
+function getWeatherMeta(conditionText) {
+  conditionText = conditionText.toLowerCase(); // 🔥 Normalize input
+
+  let weatherImage = "cloudy.png";
+  let theme = "default";
+  let message = "";
+
+  if (conditionText === "clear") {
     weatherImage = "clear.png";
-    previosTheme = "clear";
-    rootElement.classList.add(previosTheme);
-    weatherMessage = "☀️ Clear skies today. Enjoy the sunshine!";
-  } else if (conditionText === "Sunny") {
+    theme = "clear";
+    message = "☀️ Clear skies today. Enjoy the sunshine!";
+  } else if (conditionText === "sunny") {
     weatherImage = "sunny.png";
-    previosTheme = "sunny";
-    rootElement.classList.add(previosTheme);
-    weatherMessage = "☀️ It's clear and sunny. A perfect day to be outdoors.";
+    theme = "sunny";
+    message = "☀️ It's clear and sunny. A perfect day to be outdoors.";
   } else if (
-    conditionText === "Mist" ||
-    conditionText === "Partly cloudy" ||
-    conditionText === "Partly Cloudy" ||
-    conditionText === "Cloudy" ||
-    conditionText === "Overcast"
+    ["mist", "partly cloudy", "cloudy", "overcast", ,].includes(conditionText)
   ) {
-    previosTheme = "overcast";
-    rootElement.classList.add(previosTheme);
     weatherImage = "cloudy.png";
-    weatherMessage = "☁️ It's cloudy.enjoy The Weather.";
-  } else if (conditionText === "Fog" || conditionText === "Freezing fog") {
-    weatherImage = "fog.png";
-    previosTheme = "overcast";
-    rootElement.classList.add(previosTheme);
-    weatherMessage = "🌫️ Drive carefully. Visibility is low due to fog.";
+    theme = "overcast";
+    message = "☁️ It's cloudy. Enjoy the weather.";
   } else if (
-    conditionText === "Patchy rain possible" ||
-    conditionText === "Patchy rain nearby" ||
-    conditionText === "Patchy light rain" ||
-    conditionText === "Light rain" ||
-    conditionText === "Moderate rain at times" ||
-    conditionText === "Moderate rain" ||
-    conditionText === "Heavy rain at times" ||
-    conditionText === "Heavy rain" ||
-    conditionText === "Light rain shower" ||
-    conditionText === "Moderate or heavy rain shower" ||
-    conditionText === "Torrential rain shower"
+    ["fog", "freezing fog", "partly cloudy", "cloudy"].includes(conditionText)
+  ) {
+    weatherImage = "fog.png";
+    theme = "overcast";
+    message = "🌫️ Drive carefully. Visibility is low due to fog.";
+  } else if (
+    [
+      "patchy rain possible",
+      "patchy rain nearby",
+      "patchy light rain",
+      "light rain",
+      "moderate rain at times",
+      "moderate rain",
+      "heavy rain at times",
+      "heavy rain",
+      "light rain shower",
+      "moderate or heavy rain shower",
+      "torrential rain shower",
+    ].includes(conditionText)
   ) {
     weatherImage = "rain.png";
-    previosTheme = "rain";
-    weatherMessage =
-      "🌦️ Rainy weather. Drive safely and watch for slippery roads.";
-
-    rootElement.classList.add(previosTheme);
+    theme = "rain";
+    message = "🌦️ Rainy weather. Drive safely and watch for slippery roads.";
   } else if (
-    conditionText === "Heavy rain at times" ||
-    conditionText === "Heavy rain"
-  ) {
-    weatherImage = "heavy-rain.png";
-    previosTheme = "thunder";
-    rootElement.classList.add(previosTheme);
-    weatherMessage =
-      "🌧️ It's pouring! Stay indoors if possible and avoid waterlogged areas.";
-  } else if (
-    conditionText === "Thundery outbreaks possible" ||
-    conditionText === "Thundery outbreaks in nearby" ||
-    conditionText === "Patchy light rain with thunder" ||
-    conditionText === "Moderate or heavy rain with thunder" ||
-    conditionText === "Patchy light snow with thunder" ||
-    conditionText === "Moderate or heavy snow with thunder"
+    [
+      "thundery outbreaks possible",
+      "thundery outbreaks in nearby",
+      "patchy light rain with thunder",
+      "moderate or heavy rain with thunder",
+      "patchy light snow with thunder",
+      "moderate or heavy snow with thunder",
+      "patchy light rain in area with thunder",
+    ].includes(conditionText)
   ) {
     weatherImage = "thunder.png";
-    previosTheme = "thunder";
-    weatherMessage =
-      "⚡ Stay indoors and avoid open areas during thunderstorms.";
-    rootElement.classList.add(previosTheme);
+    theme = "thunder";
+    message = "⚡ Stay indoors and avoid open areas during thunderstorms.";
   } else if (
-    conditionText === "Patchy snow possible" ||
-    conditionText === "Patchy light snow" ||
-    conditionText === "Light snow" ||
-    conditionText === "Patchy moderate snow" ||
-    conditionText === "Moderate snow" ||
-    conditionText === "Patchy heavy snow" ||
-    conditionText === "Heavy snow" ||
-    conditionText === "Light snow showers" ||
-    conditionText === "Moderate or heavy snow showers" ||
-    conditionText === "Blowing snow" ||
-    conditionText === "Blizzard"
+    [
+      "patchy snow possible",
+      "patchy light snow",
+      "light snow",
+      "patchy moderate snow",
+      "moderate snow",
+      "patchy heavy snow",
+      "heavy snow",
+      "light snow showers",
+      "moderate or heavy snow showers",
+      "blowing snow",
+      "blizzard",
+    ].includes(conditionText)
   ) {
     weatherImage = "snow.png";
-    previosTheme = "snowy";
-    rootElement.classList.add(previosTheme);
-    weatherMessage = "🧊 It's freezing. Bundle up and keep warm.";
+    theme = "snowy";
+    message = "🧊 It's freezing. Bundle up and keep warm.";
   } else if (
-    conditionText === "Patchy sleet possible" ||
-    conditionText === "Light sleet" ||
-    conditionText === "Moderate or heavy sleet" ||
-    conditionText === "Light sleet showers" ||
-    conditionText === "Moderate or heavy sleet showers" ||
-    conditionText === "Ice pellets" ||
-    conditionText === "Light showers of ice pellets" ||
-    conditionText === "Moderate or heavy showers of ice pellets" ||
-    conditionText === "Patchy freezing drizzle possible" ||
-    conditionText === "Freezing drizzle" ||
-    conditionText === "Heavy freezing drizzle" ||
-    conditionText === "Light freezing rain" ||
-    conditionText === "Moderate or heavy freezing rain"
+    [
+      "patchy sleet possible",
+      "light sleet",
+      "moderate or heavy sleet",
+      "light sleet showers",
+      "moderate or heavy sleet showers",
+      "ice pellets",
+      "light showers of ice pellets",
+      "moderate or heavy showers of ice pellets",
+      "patchy freezing drizzle possible",
+      "freezing drizzle",
+      "heavy freezing drizzle",
+      "light freezing rain",
+      "moderate or heavy freezing rain",
+    ].includes(conditionText)
   ) {
-    previosTheme = "snowy";
-    rootElement.classList.add(previosTheme);
-    weatherMessage = "🧊 It's snowing. Bundle up and keep warm.";
-
     weatherImage = "ice.png";
+    theme = "snowy";
+    message = "🧊 It's snowing. Bundle up and keep warm.";
   } else if (
-    conditionText === "Patchy light drizzle" ||
-    conditionText === "Light drizzle"
+    ["patchy light drizzle", "light drizzle"].includes(conditionText)
   ) {
     weatherImage = "drizzle.png";
-    previosTheme = "rain";
-    weatherMessage =
-      "🌦️ Light drizzle outside. Keep an umbrella handy just in case.";
-
-    rootElement.classList.add(previosTheme);
-  } else {
-    previosTheme = "default";
-
-    rootElement.classList.add(previosTheme);
+    theme = "rain";
+    message = "🌦️ Light drizzle outside. Keep an umbrella handy just in case.";
   }
 
-  weatherDetail.innerHTML = weatherMessage;
-
-  // Apply image
-  weatherImageElement.src = `assets/${weatherImage}`;
+  return { weatherImage, theme, message };
 }
